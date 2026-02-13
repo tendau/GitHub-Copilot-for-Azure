@@ -1,11 +1,12 @@
 ---
 name: agent-framework-deploy
-description: Deploy AI agents and workflows built with Microsoft Agent Framework SDK to Microsoft Foundry.
+description: |
+  Deploy AI agents and workflows built with Microsoft Agent Framework SDK to Microsoft Foundry. Handles Dockerfile generation, ACR container build, hosted agent version creation, and container startup.
+  USE FOR: deploy agent to Foundry, publish agent to production, host agent on Azure, deploy workflow to Foundry, go live with agent, production deployment agent, deploy agent framework app, push agent to Azure AI Foundry, containerize agent, deploy multi-agent workflow.
+  DO NOT USE FOR: creating agents (use agent-framework), deploying models (use models/deploy-model), deploying web apps or functions (use azure-deploy), managing quotas (use quota).
 ---
 
 ### Deployment
-
-**When to use**: User asks to deploy, publish, host, or go to production with AI agents or workflows built with Microsoft Agent Framework SDK to Microsoft Foundry. Common trigger phrases include: "deploy to Foundry", "publish my agent", "host on Azure", "deploy to Azure AI Foundry", "go live", "production deployment", or "deploy my workflow".
 
 #### Prerequisites
 
