@@ -47,6 +47,14 @@ This skill delegates to `microsoft-foundry` MCP tools for model and project oper
 | `foundry_models_deployments_list` | List deployed models for judge model |
 | `foundry_resource_get` | Get project endpoint |
 
+## References
+
+| Topic | File | Description |
+|-------|------|-------------|
+| Code Example | [references/code-example.md](references/code-example.md) | Complete evaluation code example, key concepts, code generation guidelines |
+| Built-in Evaluators | [references/built-in-evaluators.md](references/built-in-evaluators.md) | Agent, general purpose, RAG, and similarity evaluators catalog |
+| Custom Evaluators | [references/custom-evaluators.md](references/custom-evaluators.md) | Custom prompt (LLM judge) and code (Python function) evaluators |
+
 ## Evaluation Workflow
 
 ```markdown
@@ -62,20 +70,27 @@ Evaluation Setup:
 
 ### Step 1: Clarify Metrics
 
-Analyze user's app and suggest 1-3 relevant metrics:
+Analyze user's app and suggest 1-3 relevant metrics. Metrics can be **built-in** (see [references/built-in-evaluators.md](references/built-in-evaluators.md)) or **custom**. Always state the metric type.
 
 ```
 Based on your [agent type], I recommend:
-- [Metric 1]: [Brief description]
-- [Metric 2]: [Brief description]
+1. [Metric name] — [brief description] (built-in | custom, prompt-based | code-based)
+2. [Metric name] — [brief description] (built-in | custom, prompt-based | code-based)
 
 Should I proceed with these metrics?
+```
+
+**Example** — math solver agent, general request "set up evaluation":
+```
+1. correctness — validates if the agent answer matches the ground truth (custom, code-based)
+2. tool_call_accuracy — assesses tool usage relevance and parameter correctness (built-in, prompt-based)
 ```
 
 **Guidelines:**
 - If user specifies objectives (e.g., "evaluate tool accuracy") → suggest only relevant metrics
 - If general request ("evaluate my agent") → suggest max 3 most important
 - Match metric count to explicitly mentioned objectives
+- Prefer built-in evaluators when they fit; use custom when no built-in covers the need
 
 ### Step 2: Obtain Test Dataset
 
@@ -119,70 +134,7 @@ Proceed to generate evaluation code?
 
 ### Step 5: Generate Evaluation Code
 
-Use the `pytest-agent-evals` plugin to write test-suite-style evaluation code.
-
-#### Complete Example
-
-```python
-import os
-import pytest
-from pytest_agent_evals import (
-    evals,
-    EvaluatorResults,
-    AzureOpenAIModelConfig,
-    ChatAgentConfig,
-    BuiltInEvaluatorConfig,
-)
-from dotenv import load_dotenv
-from my_agent import create_my_agent  # Import the agent from user's source code
-
-load_dotenv()
-project_endpoint = os.getenv("FOUNDRY_PROJECT_ENDPOINT")
-model_deployment = os.getenv("FOUNDRY_MODEL_DEPLOYMENT_NAME")
-# Azure OpenAI endpoint derived from the Foundry resource
-# Format: https://<resource>.openai.azure.com/
-azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-
-# --- Agent Fixture ---
-# The plugin calls this fixture to get the agent instance for testing.
-@pytest.fixture
-def my_agent():
-    return create_my_agent(project_endpoint, model_deployment)
-
-# --- Evaluation Suite ---
-# Judge model uses Azure OpenAI endpoint format (not Foundry project endpoint).
-@evals.dataset("my_agent_dataset.jsonl")
-@evals.judge_model(AzureOpenAIModelConfig(deployment_name=model_deployment, endpoint=azure_openai_endpoint))
-@evals.agent(ChatAgentConfig(my_agent))
-class TestMyAgent:
-
-    @evals.evaluator(BuiltInEvaluatorConfig("task_adherence"))
-    def test_task_adherence(self, evaluator_results: EvaluatorResults):
-        assert evaluator_results.task_adherence.result == "pass"
-
-    @evals.evaluator(BuiltInEvaluatorConfig("relevance"))
-    def test_relevance(self, evaluator_results: EvaluatorResults):
-        assert evaluator_results.relevance.result == "pass"
-```
-
-#### Key Concepts
-
-1. **Agent Fixture**: A `@pytest.fixture` that returns an initialized `ChatAgent` or `WorkflowAgent` instance. Referenced via `ChatAgentConfig(agent_fixture)`.
-2. **Dataset**: `@evals.dataset("file.jsonl")` — JSONL file with `query` (required) and `id` (optional) fields.
-3. **Judge Model**: `@evals.judge_model(AzureOpenAIModelConfig(...))` — LLM used for AI-assisted (prompt-based) evaluation. The endpoint must be in Azure OpenAI format (`https://<resource>.openai.azure.com/`), not Foundry project endpoint format.
-4. **Evaluators**: `@evals.evaluator(...)` on each test method — registers an evaluator that runs against the agent's response.
-5. **Results**: Access via `evaluator_results.<name>.result` (returns `"pass"` or `"fail"`) and `evaluator_results.<name>.score`.
-
-#### Code Generation Guidelines
-
-- **File naming**: `test_<agent_name>.py`
-- **Class naming**: `Test<AgentName>` (must start with `Test`)
-- **Test naming**: `test_<metric_name>` (must start with `test_`)
-- **One evaluator per test method** — each `@evals.evaluator` maps to one test
-- **Import the agent** from the user's source code and wrap in a `@pytest.fixture`. Always reuse the existing agent definition to keep a single source of truth — if the agent is updated, the evaluation automatically tests the updated version. If the agent cannot be directly imported (e.g., it's created inline in a `main()` function), perform a simple refactor: extract the agent creation into a standalone function or module-level variable in the user's source code, then import it in the test file
-- **Judge model endpoint**: Must use Azure OpenAI endpoint format (`https://<resource>.openai.azure.com/`). The Foundry project endpoint (`https://<resource>.services.ai.azure.com/api/projects/<project>`) will NOT work for the judge model. Add `AZURE_OPENAI_ENDPOINT` to `.env`.
-- **Judge model selection**: By default, reuse the agent's model deployment silently. Only if the model is unsupported (reasoning models, gpt-5 non-chat), use a separate env var (e.g., `JUDGE_MODEL_DEPLOYMENT_NAME`) and use `microsoft-foundry` skill's model catalog to select a supported model.
-- Ensure `.env` contains `FOUNDRY_PROJECT_ENDPOINT`, `FOUNDRY_MODEL_DEPLOYMENT_NAME` (reuse from agent creation), and `AZURE_OPENAI_ENDPOINT` (for judge model)
+Use the `pytest-agent-evals` plugin to write test-suite-style evaluation code. See [references/code-example.md](references/code-example.md) for the complete example, key concepts, and code generation guidelines. If the selected metrics include custom evaluators, see [references/custom-evaluators.md](references/custom-evaluators.md) for prompt-based and code-based patterns.
 
 ### Step 6: Set Up Project
 
@@ -268,111 +220,11 @@ After generating the documentation, inform the user they can follow `evaluation.
 
 ## Built-in Evaluators
 
-Use `BuiltInEvaluatorConfig(name, threshold)` in `@evals.evaluator(...)`.
-
-### Agent Evaluators
-
-| Evaluator | Type | Description |
-|-----------|------|-------------|
-| `task_adherence` | Prompt-based | Assesses how well an AI-generated response follows the assigned task based on alignment with instructions and definitions, accuracy and clarity of the response, and proper use of provided tool definitions. |
-| `intent_resolution` | Prompt-based | Assesses whether the user intent was correctly identified and resolved. |
-| `tool_call_accuracy` | Prompt-based | Assesses how accurately an AI uses tools by examining relevance to the conversation, parameter correctness according to tool definitions, and parameter value extraction from the conversation. |
-| `tool_selection` | Prompt-based | Evaluates whether an AI agent selected the most appropriate and efficient tools for a given task, avoiding redundancy or missing essentials. |
-| `task_completion` | Prompt-based | Evaluates whether an AI agent successfully completed the requested task end to end by analyzing the conversation history and agent response to determine if all task requirements were met. |
-| `tool_call_success` | Prompt-based | Evaluates whether all tool calls were successful or not. Checks all tool calls to determine if any resulted in technical failure like exception, error, or timeout. |
-| `tool_input_accuracy` | Prompt-based | Checks whether all parameters in an agent's tool call are correct, validating grounding, type, format, completeness, and contextual appropriateness. |
-| `tool_output_utilization` | Prompt-based | Checks if an agent correctly interprets and contextually uses the outputs returned by invoked tools without fabrication or omission. |
-
-### General Purpose
-
-| Evaluator | Type | Description |
-|-----------|------|-------------|
-| `coherence` | Prompt-based | Assesses the ability of the language model to generate text that reads naturally, flows smoothly, and resembles human-like language. |
-| `fluency` | Prompt-based | Assesses the extent to which the generated text conforms to grammatical rules, syntactic structures, and appropriate vocabulary usage. |
-| `relevance` | Prompt-based | Assesses the ability of answers to capture the key points of the context and produce coherent and contextually appropriate outputs. |
-
-### RAG Evaluators
-
-| Evaluator | Type | Description | Dataset Fields |
-|-----------|------|-------------|----------------|
-| `groundedness` | Prompt-based | Assesses the correspondence between claims in an AI-generated answer and the source context, making sure that these claims are substantiated by the context. | `context` |
-| `retrieval` | Prompt-based | Assesses the AI system's performance in retrieving information for additional context (e.g. a RAG scenario). | `context` |
-| `response_completeness` | Prompt-based | Assesses how thoroughly an AI model's generated response aligns with the key information, claims, and statements established in the ground truth. | `ground_truth` |
-
-### Similarity Evaluators
-
-| Evaluator | Type | Description | Dataset Fields |
-|-----------|------|-------------|----------------|
-| `similarity` | Code-based | Evaluates the likeness between a ground truth sentence and the AI model's generated prediction using sentence-level embeddings. | `ground_truth` |
-| `f1_score` | Code-based | Calculates F1 score. | `ground_truth` |
-| `bleu_score` | Code-based | Calculates BLEU score. | `ground_truth` |
-
-> **Dataset Fields**: Additional columns required in the JSONL dataset beyond `query`. The plugin auto-extracts `response`, `tool_calls`, and `tool_definitions` from the agent.
+See [references/built-in-evaluators.md](references/built-in-evaluators.md) for the full catalog of agent, general purpose, RAG, and similarity evaluators.
 
 ## Custom Evaluators
 
-For metrics not covered by built-in evaluators, define custom evaluators.
-
-### Custom Prompt Evaluator (LLM Judge)
-
-Use `CustomPromptEvaluatorConfig` to define an LLM-based evaluator with a Jinja2 prompt template.
-
-```python
-from pytest_agent_evals import CustomPromptEvaluatorConfig
-
-friendliness_prompt = """
-You are an AI assistant that evaluates the tone of a response.
-Score the response on a scale of 1 to 5, where 1 is hostile/rude and 5 is very friendly.
-Provide a brief reason for your score.
-
-Input:
-Query: {{query}}
-Response: {{response}}
-
-You must output your result in the following JSON format:
-{
-    "result": <integer from 1 to 5>,
-    "reason": "<brief explanation>"
-}
-"""
-
-@evals.evaluator(CustomPromptEvaluatorConfig(name="friendliness", prompt=friendliness_prompt, threshold=4))
-def test_friendliness(self, evaluator_results: EvaluatorResults):
-    assert evaluator_results.friendliness.result == "pass"
-```
-
-**Template variables**: `{{query}}`, `{{response}}`, `{{tool_calls}}`, `{{tool_definitions}}`, `{{context}}`, `{{ground_truth}}`, and any other dataset columns.
-
-**Output format**: The prompt must instruct the LLM to output JSON with `"result"` (int, float, or bool) and `"reason"` (string).
-
-**Threshold types**:
-- `int` — ordinal scale (e.g., 1-5). Pass if score >= threshold.
-- `float` — continuous scale (e.g., 0.0-1.0). Pass if score >= threshold.
-- `bool` — boolean. Pass if returned boolean matches threshold.
-
-### Custom Code Evaluator (Python Function)
-
-Use `CustomCodeEvaluatorConfig` for deterministic or rule-based grading.
-
-```python
-from pytest_agent_evals import CustomCodeEvaluatorConfig
-
-def length_check(sample, item):
-    """Pass if response is shorter than 100 characters."""
-    return 1.0 if len(sample["output_text"]) < 100 else 0.0
-
-@evals.evaluator(CustomCodeEvaluatorConfig(name="length_check", grader=length_check, threshold=0.9))
-def test_length_check(self, evaluator_results: EvaluatorResults):
-    assert evaluator_results.length_check.result == "pass"
-```
-
-**Grader function signature**:
-```python
-def grade(sample: dict[str, Any], item: dict[str, Any]) -> float:
-    # sample: {"output_text": str, "tool_calls": list, "tool_definitions": list}
-    # item: dataset row (e.g., {"query": str, "context": str, ...})
-    return score  # float, 0.0 to 1.0
-```
+See [references/custom-evaluators.md](references/custom-evaluators.md) for custom prompt (LLM judge) and code (Python function) evaluator patterns.
 
 ## Error Handling
 
