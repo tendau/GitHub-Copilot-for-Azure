@@ -113,7 +113,10 @@ If MCP tools are unavailable, use the `azure-ai-projects` SDK:
 | Topic | File | Description |
 |-------|------|-------------|
 | SDK Operations | [references/sdk-operations.md](references/sdk-operations.md) | Python SDK code for CRUD operations |
-| Agent Tools | [references/agent-tools.md](references/agent-tools.md) | Adding tools to agents (code interpreter, search, functions) |
+| Simple Tools | [references/agent-tools.md](references/agent-tools.md) | Code Interpreter, Function Calling, Bing Grounding |
+| Azure AI Search | [references/tool-azure-ai-search.md](references/tool-azure-ai-search.md) | Search index grounding with RBAC setup + connection |
+| MCP Tool | [references/tool-mcp.md](references/tool-mcp.md) | Connect to remote MCP servers with approval workflow |
+| Connections | [project/connections.md](../../../project/connections.md) | Reusable connection CRUD helpers (list, get, create) |
 
 ## Error Handling
 
