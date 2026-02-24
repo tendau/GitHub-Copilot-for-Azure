@@ -19,7 +19,6 @@ import {
   areToolCallsSuccess,
 } from "../utils/agent-runner";
 import * as fs from "fs";
-import { AIProjectClient } from "@azure/ai-projects";
 import { DefaultAzureCredential } from "@azure/identity";
 
 const SKILL_NAME = "microsoft-foundry";
@@ -292,6 +291,7 @@ describeIntegration(`${SKILL_NAME} - Integration Tests`, () => {
 
     const agentNameSuffix = randomUUID().substring(0, 4);
     const agentName = `onboarding-buddy-${agentNameSuffix}`;
+    const { AIProjectClient } = await import("@azure/ai-projects");
     const projectClient = new AIProjectClient(projectEndpoint, new DefaultAzureCredential());
 
     const _agentMetadata = await agent.run({
