@@ -173,7 +173,7 @@ For cross-deployment TPM analysis, see [references/tpm-analysis-script.md](refer
 - Use exponential backoff (1s → 2s → 4s → 8s → 16s) with jitter
 - Set max retries (3-5 recommended)
 
-For code examples (Python, C#, JavaScript), see [references/RETRY_EXAMPLES.md](references/RETRY_EXAMPLES.md).
+For code examples (Python, C#, JavaScript), see [references/retry-examples.md](references/retry-examples.md).
 
 ### Step 5: Present Solutions to User
 

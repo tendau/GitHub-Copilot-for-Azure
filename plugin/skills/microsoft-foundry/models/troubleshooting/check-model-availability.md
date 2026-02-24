@@ -16,7 +16,7 @@ Guide for checking regional availability of AI models, understanding deployment 
 
 | Property | Value |
 |----------|-------|
-| **Primary Tool** | Capacity discovery scripts (see [capacity skill](../models/deploy-model/capacity/SKILL.md)) |
+| **Primary Tool** | Capacity discovery scripts (see [capacity skill](../deploy-model/capacity/SKILL.md)) |
 | **MCP Tools** | `foundry_models_list`, `quota_usage_check` |
 | **Availability Factors** | Region, model version, SKU type, capacity |
 | **Common Issue** | Model exists but not in project's region |
@@ -76,7 +76,7 @@ AskUserQuestion:
 
 ## Diagnostic Workflow
 
-This skill uses the **capacity discovery scripts** from the [deploy-model/capacity skill](../models/deploy-model/capacity/SKILL.md) for availability checks. The scripts handle the complex REST API calls and multi-region searches.
+This skill uses the **capacity discovery scripts** from the [deploy-model/capacity skill](../deploy-model/capacity/SKILL.md) for availability checks. The scripts handle the complex REST API calls and multi-region searches.
 
 > **IMPORTANT WORKFLOW ORDER:** Always check the user's actual subscription BEFORE giving any generic information about access requirements. The user may already have access to preview/limited models.
 
@@ -159,7 +159,7 @@ For finding which regions support a model or comparing availability across regio
 
 > 💡 The scripts automatically query capacity across ALL regions, cross-reference with the user's existing projects, and output a ranked table.
 
-For the full workflow details, see [capacity/SKILL.md](../models/deploy-model/capacity/SKILL.md).
+For the full workflow details, see [capacity/SKILL.md](../deploy-model/capacity/SKILL.md).
 
 ### Step 5: Detailed Quota Check (Multi-Region)
 
@@ -199,8 +199,8 @@ az cognitiveservices usage list \
 
 **IMPORTANT:** Use `AskUserQuestion` to present options based on findings:
 
-- **Model available, capacity available** → Proceed with deployment (hand off to [preset](../models/deploy-model/preset/SKILL.md) or [customize](../models/deploy-model/customize/SKILL.md))
-- **Model available, no capacity** → Request quota increase or try different region (see [quota skill](../quota/quota.md))
+- **Model available, capacity available** → Proceed with deployment (hand off to [preset](../deploy-model/preset/SKILL.md) or [customize](../deploy-model/customize/SKILL.md))
+- **Model available, no capacity** → Request quota increase or try different region (see [quota skill](../../quota/quota.md))
 - **Model not in region** → Suggest alternative regions from discovery results
 - **SKU not supported** → Suggest alternative SKU or region
 
@@ -264,10 +264,10 @@ For detailed explanations of each reason, see [references/model-availability-flo
 
 ## Related Skills
 
-- **[capacity](../models/deploy-model/capacity/SKILL.md)** — Full capacity discovery workflow and scripts
-- **[preset](../models/deploy-model/preset/SKILL.md)** — Quick deployment after finding availability
-- **[customize](../models/deploy-model/customize/SKILL.md)** — Custom deployment with full control
-- **[quota](../quota/quota.md)** — Quota management and increase requests
+- **[capacity](../deploy-model/capacity/SKILL.md)** — Full capacity discovery workflow and scripts
+- **[preset](../deploy-model/preset/SKILL.md)** — Quick deployment after finding availability
+- **[customize](../deploy-model/customize/SKILL.md)** — Custom deployment with full control
+- **[quota](../../quota/quota.md)** — Quota management and increase requests
 
 ## Additional Resources
 
