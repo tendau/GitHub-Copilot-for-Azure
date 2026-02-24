@@ -301,3 +301,9 @@ When running in non-interactive mode (e.g., `nonInteractive: true` or YOLO mode)
 - [Foundry Hosted Agents](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents?view=foundry)
 - [Foundry Agent Runtime Components](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/runtime-components?view=foundry)
 - [Foundry Samples](https://github.com/microsoft-foundry/foundry-samples/)
+
+## After Deployment
+
+After a successful deployment, ask the user: *"Would you like to set up evaluation and monitoring for this agent?"*
+
+If yes, follow the [observe skill](../observe/observe.md) to configure evaluators, run batch evaluations, and optimize the agent.
