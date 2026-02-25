@@ -1,6 +1,12 @@
 # Agent Observability Loop
 
-Orchestrate the full eval-driven optimization cycle for a Foundry agent: deploy → evaluate → analyze failures → optimize prompt → re-deploy → compare versions → iterate.
+Orchestrate the full eval-driven optimization cycle for a Foundry agent. This skill manages the **multi-step workflow** — auto-creating evaluators, generating test datasets, running batch evals, clustering failures, optimizing prompts, redeploying, and comparing versions. Use this skill instead of calling individual foundry-mcp evaluation tools manually.
+
+## When to Use This Skill
+
+USE FOR: evaluate my agent, run an eval, test my agent, check agent quality, run batch evaluation, analyze eval results, why did my eval fail, cluster failures, improve agent quality, optimize agent prompt, compare agent versions, re-evaluate after changes, set up CI/CD evals, agent monitoring, eval-driven optimization.
+
+> ⚠️ **DO NOT manually call** `evaluation_agent_batch_eval_create`, `evaluator_catalog_create`, `evaluation_comparison_create`, or `prompt_optimize` **without reading this skill first.** This skill defines required pre-checks, artifact persistence, and multi-step orchestration that the raw tools do not enforce.
 
 ## Quick Reference
 
@@ -27,18 +33,6 @@ Orchestrate the full eval-driven optimization cycle for a Foundry agent: deploy 
 2. Use `agent_get` and `agent_container_status_get` to verify the agent exists and is running
 3. Use `evaluation_get` to check for existing eval runs
 4. Jump to the appropriate entry point
-
-## Loop Overview
-
-```
-Deploy → Setup evaluators & dataset
-  → Evaluate (batch eval run)
-  → Download & cluster failures
-  → Pick category → Optimize prompt
-  → Deploy new version → Re-evaluate
-  → Compare versions → Iterate or finish
-  → Enable CI/CD evals & monitoring
-```
 
 ## Behavioral Rules
 
