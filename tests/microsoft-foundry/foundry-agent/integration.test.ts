@@ -30,7 +30,7 @@ if (skipTests && skipReason) {
 
 const describeIntegration = skipTests ? describe.skip : describe;
 
-describeIntegration(`${SKILL_NAME}_foundry-agent - Integration Tests`, () => {
+describeIntegration("foundry-agent - Integration Tests", () => {
   const agent = useAgentRunner();
 
   describe("skill-invocation", () => {
