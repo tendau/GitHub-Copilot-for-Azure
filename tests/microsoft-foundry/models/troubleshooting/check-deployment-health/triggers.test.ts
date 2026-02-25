@@ -9,15 +9,15 @@ import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
 import matter from "gray-matter";
-import { TriggerMatcher } from "../../../utils/trigger-matcher";
-import { LoadedSkill } from "../../../utils/skill-loader";
+import { TriggerMatcher } from "../../../../utils/trigger-matcher";
+import { LoadedSkill } from "../../../../utils/skill-loader";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SKILL_FILE = path.resolve(
   __dirname,
-  "../../../../plugin/skills/microsoft-foundry/troubleshooting/check-deployment-health.md"
+  "../../../../../plugin/skills/microsoft-foundry/models/troubleshooting/check-deployment-health.md"
 );
 
 function loadTroubleshootingSkill(): LoadedSkill {

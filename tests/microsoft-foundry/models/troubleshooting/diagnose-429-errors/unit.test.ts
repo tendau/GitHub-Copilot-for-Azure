@@ -8,14 +8,14 @@ import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
 import matter from "gray-matter";
-import { LoadedSkill } from "../../../utils/skill-loader";
+import { LoadedSkill } from "../../../../utils/skill-loader";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SKILL_FILE = path.resolve(
   __dirname,
-  "../../../../plugin/skills/microsoft-foundry/troubleshooting/diagnose-429-errors.md"
+  "../../../../../plugin/skills/microsoft-foundry/models/troubleshooting/diagnose-429-errors.md"
 );
 
 function loadTroubleshootingSkill(): LoadedSkill {
@@ -159,7 +159,7 @@ describe("diagnose-429-errors - Unit Tests", () => {
   describe("References", () => {
     test("links to reference files", () => {
       expect(skill.content).toContain("references/sku-types.md");
-      expect(skill.content).toContain("references/RETRY_EXAMPLES.md");
+      expect(skill.content).toContain("references/retry-examples.md");
       expect(skill.content).toContain("references/scaling-strategies.md");
       expect(skill.content).toContain("references/solution-selection.md");
     });
