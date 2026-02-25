@@ -220,6 +220,25 @@ To calculate the encodedSubId, you need to take subscription id and convert it i
 python -c "import base64,uuid;print(base64.urlsafe_b64encode(uuid.UUID('<SUBSCRIPTION_ID>').bytes).rstrip(b'=').decode())"
 ```
 
+## Document Deployment Context
+
+After a successful deployment, persist the following to a `.env` or config file in the repo so future conversations (e.g., evaluation, monitoring) can pick them up automatically:
+
+| Variable | Purpose | Example |
+|----------|---------|---------|
+| `AZURE_AI_PROJECT_ENDPOINT` | Foundry project endpoint | `https://<account>.services.ai.azure.com/api/projects/<project>` |
+| `AZURE_AI_AGENT_NAME` | Deployed agent name | `my-support-agent` |
+| `AZURE_AI_AGENT_VERSION` | Current agent version | `1` |
+| `AZURE_CONTAINER_REGISTRY` | ACR resource (hosted agents) | `myregistry.azurecr.io` |
+
+If a `.env` file already exists, read it first and merge — do not overwrite existing values without confirmation.
+
+## After Deployment
+
+After a successful deployment, ask the user: *"Would you like to set up evaluation and monitoring for this agent?"*
+
+If yes, follow the [observe skill](../observe/observe.md) to configure evaluators, run batch evaluations, and optimize the agent.
+
 ## Agent Definition Schemas
 
 ### Prompt Agent
@@ -301,9 +320,3 @@ When running in non-interactive mode (e.g., `nonInteractive: true` or YOLO mode)
 - [Foundry Hosted Agents](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents?view=foundry)
 - [Foundry Agent Runtime Components](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/runtime-components?view=foundry)
 - [Foundry Samples](https://github.com/microsoft-foundry/foundry-samples/)
-
-## After Deployment
-
-After a successful deployment, ask the user: *"Would you like to set up evaluation and monitoring for this agent?"*
-
-If yes, follow the [observe skill](../observe/observe.md) to configure evaluators, run batch evaluations, and optimize the agent.
