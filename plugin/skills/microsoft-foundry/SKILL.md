@@ -2,7 +2,7 @@
 name: microsoft-foundry
 description: |
   Use this skill for Microsoft Foundry (Azure AI Foundry): deploy models from catalog, build RAG apps, create/evaluate AI agents, manage RBAC/permissions, manage quotas/capacity, create Foundry resources.
-  USE FOR: Microsoft Foundry, AI Foundry, deploy model, deploy GPT, OpenAI model, model catalog, RAG, knowledge index, create agent, evaluate agent, agent monitoring, create Foundry project, set up Foundry, onboard Foundry, provision Foundry, create Foundry resource, AIServices, register resource provider, RBAC, role assignment, managed identity, service principal, quota, capacity, TPM, PTU, QuotaExceeded, InsufficientQuota, DeploymentLimitReached, check quota, quota increase, model deployment, rate limiting, 429 errors, deployment health, inference failures, model availability, regional availability.
+  USE FOR: Microsoft Foundry, AI Foundry, deploy model, deploy GPT, OpenAI model, model catalog, RAG, knowledge index, create agent, evaluate agent, agent monitoring, create Foundry project, set up Foundry, onboard Foundry, provision Foundry, create Foundry resource, AIServices, register resource provider, RBAC, role assignment, managed identity, service principal, quota, capacity, TPM, PTU, QuotaExceeded, InsufficientQuota, DeploymentLimitReached, check quota, quota increase, model deployment, rate limiting, 429 errors, deployment health, inference failures, model availability, regional availability, azd deploy agent, azd up agent.
   DO NOT USE FOR: Azure Functions (use azure-functions), App Service (use azure-create-app), generic resource creation (use azure-create-app), AI Search/speech/OCR (use azure-ai).
 ---
 
