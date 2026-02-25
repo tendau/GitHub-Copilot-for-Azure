@@ -15,13 +15,9 @@ Create and manage agent deployments in Azure AI Foundry. For hosted agents, this
 
 ## When to Use This Skill
 
-- Containerize an existing agent project and deploy it as a hosted agent
-- Create a new prompt agent with a model deployment
-- Create a new hosted agent from a container image
-- Start or stop hosted agent containers
-- Check agent container status
-- Update agent configuration or instructions
-- Clone or delete an agent
+USE FOR: deploy agent to foundry, push agent to foundry, ship my agent, build and deploy container agent, deploy hosted agent, create hosted agent, deploy prompt agent, start agent container, stop agent container, ACR build, container image for agent, docker build for foundry, redeploy agent, update agent deployment, clone agent, delete agent.
+
+> ⚠️ **DO NOT manually call** `agent_update`, `agent_container_control`, `agent_definition_schema_get`, or run `az acr build` / `docker build` **without reading this skill first.** This skill orchestrates the full deployment pipeline: project scan → env var collection → Dockerfile generation → image build → agent creation → container startup → verification. Calling tools individually skips critical steps (env var confirmation, schema validation, status polling).
 
 ## MCP Tools
 

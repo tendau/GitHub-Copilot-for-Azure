@@ -18,7 +18,7 @@ This skill includes specialized sub-skills for specific workflows. **Use these i
 
 | Sub-Skill | When to Use | Reference |
 |-----------|-------------|-----------|
-| **deploy** | Containerize, build, push to ACR, create/update/start/stop/clone agent deployments | [deploy](foundry-agent/deploy/deploy.md) |
+| **deploy** | Full deployment pipeline: project scan → env vars → Dockerfile → ACR build → agent creation → container startup → verification. **Use this skill instead of manually calling agent_update or az acr build.** USE FOR: deploy agent to foundry, push agent, build container, redeploy, start/stop container, clone/delete agent. | [deploy](foundry-agent/deploy/deploy.md) |
 | **invoke** | Send messages to an agent, single or multi-turn conversations | [invoke](foundry-agent/invoke/invoke.md) |
 | **troubleshoot** | View container logs, query telemetry, diagnose failures | [troubleshoot](foundry-agent/troubleshoot/troubleshoot.md) |
 | **create** | Create new hosted agent applications. Supports Microsoft Agent Framework, LangGraph, or custom frameworks in Python or C#. Downloads starter samples from foundry-samples repo. | [create](foundry-agent/create/create.md) |
