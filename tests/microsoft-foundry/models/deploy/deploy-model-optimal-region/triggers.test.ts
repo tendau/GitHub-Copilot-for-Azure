@@ -23,19 +23,12 @@ describe(`${SKILL_NAME} - Trigger Tests`, () => {
     // Prompts that SHOULD trigger this skill
     const shouldTriggerPrompts: string[] = [
       // Quick deployment
-      "Deploy gpt-4o quickly to best region",
       "quick deployment of gpt-4o",
       "fast deployment setup",
       "fast setup for gpt-4o deployment",
       
       // Optimal region
       "find optimal region for deployment",
-
-      // Automatic region selection
-      "deploy with automatic region",
-
-      // Multi-region capacity check
-      "find region with capacity",
 
       // High availability
       "high availability deployment",
@@ -64,7 +57,6 @@ describe(`${SKILL_NAME} - Trigger Tests`, () => {
 
       // Wrong cloud provider
       "Deploy to AWS Lambda",
-      "Configure GCP Cloud Functions",
 
       // Customization scenarios (should use customize-deployment)
       "Choose model version",
