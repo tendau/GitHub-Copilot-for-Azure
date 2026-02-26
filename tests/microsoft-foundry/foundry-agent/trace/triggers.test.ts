@@ -25,7 +25,7 @@ describe("trace - Trigger Tests", () => {
       "Search agent conversations in Foundry",
       "Find failing traces for my Foundry agent",
       "My Foundry agent is slow, show me the latency",
-      "Show me the trace for this conversation",
+      "Show me the trace for this Foundry agent conversation",
       "Why is my Foundry agent returning errors in production",
       "Search traces by conversation ID in Foundry",
       "Find slow agent traces in App Insights",
