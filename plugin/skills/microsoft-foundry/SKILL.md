@@ -1,9 +1,9 @@
 ---
 name: microsoft-foundry
 description: >-
-  Microsoft Foundry (Azure AI Foundry) skill: model deployment, agent lifecycle (create, deploy, invoke, troubleshoot, evaluate), RBAC, quotas, resource management.
-  USE FOR: Microsoft Foundry, AI Foundry, hosted agent, create agent, deploy agent, debug agent, invoke agent, run agent, evaluate agent, agent monitoring, evaluation results, evaluation scores, find by response ID, agent traces, agent App Insights, GenAI telemetry, slow agent, agent errors, conversation ID, deploy models, create project, set up Foundry, onboard Foundry, provision Foundry, create Foundry resource, enable Cognitive Services, AIServices account, register resource provider, RBAC setup, deployment capacity, Deployment quota, manage deployments, inference failures, model availability, regional availability, azd deploy agent.
-  DO NOT USE FOR: Azure Functions (use azure-functions), App Service (use azure-create-app), AI Search/speech/OCR (use azure-ai). PREFER OVER azure-monitor for Foundry agent traces or GenAI telemetry.
+  Use this skill for Microsoft Foundry (Azure AI Foundry) and all operation from Foundry MCP server: manage model deployment, manage hosted agent and prompt agent (create, deploy, invoke, run, troubleshoot, evaluate Foundry Agents), manage RBAC/permissions, manage quotas and capacity of deployments, manage Foundry resources.
+  USE FOR: Microsoft Foundry, AI Foundry, hosted agent, create agent, deploy agent, debug agent, invoke agent, run agent, evaluate agent, agent monitoring, deploy models, create project, set up Foundry, onboard Foundry, provision Foundry, create Foundry resource, enable Cognitive Services, AIServices account, register resource provider, RBAC setup, deployment capacity, Deployment quota, manage deployments, inference failures, model availability, regional availability, azd deploy agent, agent traces, response ID.
+  DO NOT USE FOR: Azure Functions (use azure-functions), App Service (use azure-create-app), generic resource creation (use azure-create-app), AI Search/speech/OCR (use azure-ai).
 ---
 
 # Microsoft Foundry Skill
