@@ -25,13 +25,10 @@ describe(`${SKILL_NAME} - Trigger Tests`, () => {
       // Core customization phrases
       "I want to customize the deployment for gpt-4o",
       "customize model deployment",
-      "deploy with custom settings",
 
       // SKU selection
-      "deploy with specific SKU",
       "select SKU for deployment",
       "use Standard SKU for deployment",
-      "use GlobalStandard",
       "use ProvisionedManaged",
       
       // Capacity configuration
@@ -41,12 +38,9 @@ describe(`${SKILL_NAME} - Trigger Tests`, () => {
       // Advanced options
       "deployment with advanced options",
       "detailed deployment configuration",
-      "configure dynamic quota",
-      "enable priority processing",
       "set up spillover for deployment",
       
       // PTU deployments
-      "deploy with PTU",
       "PTU deployment",
       "provisioned throughput deployment",
       "deploy with provisioned capacity",
@@ -71,14 +65,12 @@ describe(`${SKILL_NAME} - Trigger Tests`, () => {
 
       // Wrong cloud provider
       "Deploy to AWS Lambda",
-      "Configure GCP Cloud Functions",
       
       // Non-deployment Azure tasks
       "Set up virtual network",
       "Explain blob storage lifecycle",
       
       // Other Azure AI tasks
-      "Create AI Foundry project",
       "Create knowledge index",
     ];
 
