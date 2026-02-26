@@ -47,5 +47,5 @@ USE FOR: evaluate my agent, run an eval, test my agent, check agent quality, run
 | User Intent | Skill |
 |-------------|-------|
 | "Analyze production traces" / "Search conversations" / "Find errors in App Insights" | [trace skill](../trace/trace.md) |
-| "Debug container issues" / "Container logs" | [troubleshoot skill](../../troubleshoot/) |
+| "Debug container issues" / "Container logs" | [troubleshoot skill](../troubleshoot/troubleshoot.md) |
 | "Deploy or redeploy agent" | [deploy skill](../deploy/deploy.md) |
